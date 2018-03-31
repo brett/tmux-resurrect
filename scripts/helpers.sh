@@ -121,7 +121,12 @@ resurrect_file_path() {
 _RESURRECT_FILE_PATH="$(resurrect_file_path)"
 
 last_resurrect_file() {
-	echo "$(resurrect_dir)/last"
+    local resurrect_file="$(resurrect_dir)/last"
+    if [ -e $resurrect_file ]; then
+        echo $resurrect_file
+    else
+        echo "$(ls -lrt ${_RESURRECT_DIR}| tail -1 | awk '{print $NF}')"
+    fi
 }
 
 pane_contents_dir() {
